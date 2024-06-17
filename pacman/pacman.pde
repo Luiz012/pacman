@@ -7,6 +7,7 @@ int score = 0;
 int qtdGhosts;
 int open = 1;
 int init = 1;
+int bonus;
 
   PImage pacman;
   PImage pacman_closed;
@@ -290,12 +291,18 @@ void startGame(String difficulty) {
   switch (difficulty) {
     case "Facil":
       qtdGhosts = 1;
+      bonus = 1;
+      totalComida = totalComida*bonus;
       break;
     case "Medio":
       qtdGhosts = 2;
+      bonus = 2;
+      totalComida = totalComida*bonus;
       break;
     case "Dificil":
       qtdGhosts = 4;
+      bonus = 4;
+      totalComida = totalComida*bonus;
       break;
   }
   gameStarted = true;
@@ -406,7 +413,7 @@ void checkCollisions() {
   comidaX = floor(comidaX + 0.5);
   comidaY = floor(comidaY + 0.5);
   if (maze[comidaY][comidaX] == 0) {
-    score++;
+    score+=bonus;
     maze[comidaY][comidaX] = -1;
   }
 
