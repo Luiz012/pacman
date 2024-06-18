@@ -1,4 +1,10 @@
-int gridSize = 20;  //<>//
+import ddf.minim.*;
+Minim gerenciador;
+AudioPlayer start;
+AudioPlayer death;
+AudioPlayer waka;
+
+int gridSize = 20; 
 int rows, cols; 
 int pacmanX, pacmanY; 
 int pacmanSpeed = 1;
@@ -59,6 +65,11 @@ void setup() {
   cols = width / gridSize;
   pacmanX = (cols / 2)-1;
   pacmanY = rows / 2 - 1;
+  
+  gerenciador = new Minim(this);
+  start = gerenciador.loadFile("assets/start.mp3");
+  death = gerenciador.loadFile("assets/death.mp3");
+  waka = gerenciador.loadFile("assets/waka.mp3");
   
   pacman = loadImage("assets/pacman_dir.png");
   pacman_closed = loadImage("assets/pacman_closed_dir.png");
@@ -126,6 +137,7 @@ void setBackground(PImage back){
 }
 
 void drawMainMenu() {
+  
   fill(255);
   textSize(40);
   textAlign(CENTER, CENTER);
@@ -147,6 +159,8 @@ void drawMainMenu() {
   
   
   drawButton(width / 2, height / 2 + 100, "Créditos");
+  
+  start.play();
 }
 
 void drawButton(float x, float y, String label) {
@@ -380,7 +394,7 @@ void moveGhosts() {
         int direction = (int)random(0, 4);
         
        
-        switch (direction) { //<>//
+        switch (direction) {
           case 0:
             if (ghosts[i][1] > 0 && maze[ghosts[i][1] - ghostSpeed][ghosts[i][0]] != 1) {
               ghosts[i][1] -= ghostSpeed;
@@ -413,6 +427,7 @@ void checkCollisions() {
   comidaX = floor(comidaX + 0.5);
   comidaY = floor(comidaY + 0.5);
   if (maze[comidaY][comidaX] == 0) {
+    waka.play();
     score+=bonus;
     maze[comidaY][comidaX] = -1;
   }
@@ -460,6 +475,8 @@ void displayWinMessage() {
 
 //Mensagem de fim de jogo
 void gameOver() {
+  death.play();
+  
   fill(0);
   rect((width / 2)-175, (height / 2)-50, 350, 150);
   fill(255, 0, 0);
