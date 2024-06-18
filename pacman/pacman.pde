@@ -423,7 +423,6 @@ void moveGhosts() {
 }
 
 void checkCollisions() {
-  waka.rewind();
   int comidaX = pacmanX;
   int comidaY = pacmanY;
   comidaX = floor(comidaX + 0.5);
