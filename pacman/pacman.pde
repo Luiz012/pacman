@@ -107,6 +107,7 @@ void draw() {
     drawMainMenu();
   } else {
     drawMaze();
+    start.pause();
     if (!gameEnded) {
     movePacman();
     drawPacman();
@@ -422,6 +423,7 @@ void moveGhosts() {
 }
 
 void checkCollisions() {
+  waka.rewind();
   int comidaX = pacmanX;
   int comidaY = pacmanY;
   comidaX = floor(comidaX + 0.5);
@@ -435,7 +437,8 @@ void checkCollisions() {
   // Colisao com parede
   if (maze[pacmanY][pacmanX] == 1) {
     pacmanX = constrain(pacmanX, 0, cols - 1);
-    pacmanY = constrain(pacmanY, 0, rows - 1);
+    pacmanY = constrain(pacmanY, 0, rows - 1);    
+    waka.pause();
   }
 
   // Colisao com fantasma
@@ -492,6 +495,7 @@ void gameOver() {
 
 //Reseta
 void resetGame() {
+  start.rewind();
   score = 0;
   pacmanX = (cols / 2)-1;
   pacmanY = rows / 2;
